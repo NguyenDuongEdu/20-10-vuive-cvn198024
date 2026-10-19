@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 ngày bình thường như bao ngày 🌷</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background-color: #02020a !important;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        #skyCanvas {
+            display: block;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: auto;
+        }
+
+        .section, .hero {
+            background: transparent !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-text {
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .fade-delay-1 {
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 0.4s forwards;
+        }
+
+        .fade-delay-2 {
+            opacity: 1;
+            animation: fadeIn 1.2s ease-out 0.8s forwards;
+        }
+
+        #greetingMessage {
+            display: none;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        #wishText {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            color: #e3f2fd;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 1.9;
+            text-align: center;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-width: 650px;
+            margin: 0 auto 25px;
+            min-height: 100px;
+        }
+
+        #wishText.typing::after {
+            content: "▋";
+            display: inline-block;
+            color: #ffe082;
+            margin-left: 3px;
+            animation: cursorBlink 0.7s infinite;
+        }
+
+        @keyframes cursorBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .facebook-link {
+            position: fixed;
+            right: 15px;
+            bottom: 15px;
+            z-index: 9999;
+            display: inline-block;
+            padding: 8px 13px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #ffe0ef, #e9ddff);
+            color: #ff5ca8;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            text-decoration: none;
+            border: 1px solid white;
+            box-shadow: 0 3px 12px #f5a6d877;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .facebook-link:hover {
+            transform: scale(1.08);
+            box-shadow: 0 5px 18px #f5a6d899;
+        }
+
+        #confetti {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @media (max-width: 600px) {
+            #greetingMessage h2 {
+                font-size: 2rem !important;
+            }
+
+            #wishText {
+                font-size: 0.95rem;
+                line-height: 1.9;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Nền vũ trụ -->
+    <canvas id="skyCanvas"></canvas>
+
+    <!-- Nhạc nền -->
+    <audio id="bgMusic" loop>
+        <source src="tiktok_audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicBtn" class="music-btn" type="button"
+            aria-label="Bật hoặc tắt nhạc">🎵</button>
+
+    <!-- Cánh hoa -->
+    <div id="petals"></div>
+
+    <!-- Thanh tiến trình -->
+    <div class="progress">
+        <div id="progressBar"></div>
+    </div>
+
+    <!-- Màn hình chính -->
+    <section class="section hero" id="section1">
+        <div class="hero-content">
+
+            <div id="mainIntro">
+                <div class="small-text fade-in-text">
+                    20 • 10 • 2026
+                </div>
+
+                <h1 class="fade-delay-1">
+                    Chào mừng bạn đến với...<br>
+                    Trạm Không Gian 20/10 ✨
+                </h1>
+
+                <p class="sub-text fade-delay-2">
+                    Một chút giai điệu ngọt ngào hôm nay!
+                </p>
+
+                <button id="openBtn" class="main-btn" type="button">
+                    Nhận lời chúc nhé ❤
+                </button>
+            </div>
+
+            <!-- Nội dung lời chúc -->
+            <div id="greetingMessage">
+                <div class="small-text fade-in-text">
+                    🪐 GỬI TỪ TRẠM KHÔNG GIAN
+                </div>
+
+                <h2 class="fade-delay-1"
+                    style="font-family:'Dancing Script',cursive;
+                    font-size:2.8rem;color:#ffe082;
+                    margin:15px 0;">
+                    Happy Vietnamese Women's Day!
+                </h2>
+
+                <!-- JS sẽ tự viết lời chúc vào đây -->
+                <p id="wishText"></p>
+
+                <a class="facebook-link"
+                   href="https://www.facebook.com/nguyen.duong.660508/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    🎀 Nguyễn Đại Dương ♡
+                </a>
+            </div>
+
+            <!-- Link Facebook ở màn hình mở đầu -->
+            <a id="introFacebook"
+               class="facebook-link"
+               href="https://www.facebook.com/nguyen.duong.660508/"
+               target="_blank"
+               rel="noopener noreferrer">
+                🎀 CVN ♡
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Pháo giấy -->
+    <canvas id="confetti"></canvas>
+
+    <!-- Chỉ nạp app.js một lần -->
+    <script src="app.js"></script>
+
+    <!-- Nền sao vũ trụ -->
+    <script>
+        const canvasSky = document.getElementById("skyCanvas");
+        const ctxSky = canvasSky.getContext("2d");
+
+        function resizeSkyCanvas() {
+            canvasSky.width = window.innerWidth;
+            canvasSky.height = window.innerHeight;
+        }
+
+        resizeSkyCanvas();
+        window.addEventListener("resize", resizeSkyCanvas);
+
+        const STAR_COUNT = 1000;
+        const FOV = 250;
+        const stars = [];
+
+        const starColors = [
+            "#ffffff", "#e3f2fd", "#bbdefb",
+            "#ffe082", "#f3e5f5"
+        ];
+
+        for (let i = 0; i < STAR_COUNT; i++) {
+            stars.push({
+                x: (Math.random() - 0.5) * 2000,
+                y: (Math.random() - 0.5) * 2000,
+                z: Math.random() * 2000,
+                size: Math.random() * 6 + 3,
+                color: starColors[
+                    Math.floor(Math.random() * starColors.length)
+                ]
+            });
+        }
+
+        let angleX = 0;
+        let angleY = 0;
+        let targetAngleX = 0;
+        let targetAngleY = 0;
+        let dragging = false;
+        let previous = { x: 0, y: 0 };
+
+        document.addEventListener("mousedown", e => {
+            if (e.target.closest("button, a")) return;
+            dragging = true;
+            previous = { x: e.clientX, y: e.clientY };
+        });
+
+        document.addEventListener("mousemove", e => {
+            if (!dragging) return;
+
+            targetAngleY += (e.clientX - previous.x) * 0.002;
+            targetAngleX += (e.clientY - previous.y) * 0.002;
+
+            targetAngleX = Math.max(
+                -Math.PI / 2.5,
+                Math.min(Math.PI / 2.5, targetAngleX)
+            );
+
+            previous = { x: e.clientX, y: e.clientY };
+        });
+
+        window.addEventListener("mouseup", () => dragging = false);
+
+        function renderSky() {
+            ctxSky.fillStyle = "#02020a";
+            ctxSky.fillRect(0, 0, canvasSky.width, canvasSky.height);
+
+            angleX += (targetAngleX - angleX) * 0.08;
+            angleY += (targetAngleY - angleY) * 0.08;
+
+            const cosX = Math.cos(angleX);
+            const sinX = Math.sin(angleX);
+            const cosY = Math.cos(angleY);
+            const sinY = Math.sin(angleY);
+
+            const centerX = canvasSky.width / 2;
+            const centerY = canvasSky.height / 2;
+
+            for (const star of stars) {
+                star.z -= 1;
+
+                if (star.z <= 0) {
+                    star.z = 2000;
+                    star.x = (Math.random() - 0.5) * 2000;
+                    star.y = (Math.random() - 0.5) * 2000;
+                }
+
+                const x1 = star.x * cosY - star.z * sinY;
+                const z1 = star.x * sinY + star.z * cosY;
+                const y2 = star.y * cosX - z1 * sinX;
+                const z2 = star.y * sinX + z1 * cosX;
+
+                if (z2 <= 5) continue;
+
+                const scale = FOV / z2;
+                const screenX = centerX + x1 * scale;
+                const screenY = centerY + y2 * scale;
+
+                if (
+                    screenX < 0 || screenX > canvasSky.width ||
+                    screenY < 0 || screenY > canvasSky.height
+                ) continue;
+
+                const radius = Math.max(0.2, star.size * scale * 0.5);
+                const opacity = Math.max(0, Math.min(1, (2000 - z2) / 400));
+
+                ctxSky.globalAlpha = opacity;
+                ctxSky.beginPath();
+                ctxSky.arc(screenX, screenY, radius, 0, Math.PI * 2);
+                ctxSky.fillStyle = star.color;
+                ctxSky.fill();
+            }
+
+            ctxSky.globalAlpha = 1;
+            requestAnimationFrame(renderSky);
+        }
+
+        renderSky();
+    </script>
+
+</body>
+</html>
