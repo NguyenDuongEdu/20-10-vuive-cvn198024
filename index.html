@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
     <style>
         body {
-            background-color: #02020a !important;
+            background-color: #1a1a24 !important;
             margin: 0;
             overflow-x: hidden;
         }
-
+        
         #skyCanvas {
             display: block;
             position: fixed;
@@ -27,65 +26,76 @@
             z-index: -1;
             pointer-events: auto;
         }
-
-        .section, .hero {
+        
+        .section,
+        .hero {
             background: transparent !important;
             position: relative;
             z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
-
+        
         .hero-content {
             position: relative;
             z-index: 3;
+            padding: 20px;
         }
-
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-
+        
         .fade-in-text {
             animation: fadeIn 1.2s ease-out forwards;
         }
-
+        
         .fade-delay-1 {
             opacity: 0;
             animation: fadeIn 1.2s ease-out 0.4s forwards;
         }
-
+        
         .fade-delay-2 {
             opacity: 1;
             animation: fadeIn 1.2s ease-out 0.8s forwards;
         }
-
+        
         #greetingMessage {
             display: none;
             width: 100%;
             box-sizing: border-box;
             padding: 20px;
         }
-
-      #wishText {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #ffffff; /* Chuyển hẳn sang màu trắng tinh để tăng độ tương phản */
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 400; /* Tăng độ dày chữ lên 400 để nét chữ rõ ràng, không bị vỡ hạt */
-    line-height: 1.9;
-    text-align: center;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    max-width: 650px;
-    margin: 0 auto 25px;
-    min-height: 100px;
-    /* KHẮC PHỤC CHÍNH: Đổ bóng đen đậm giúp chữ nổi bần bật, cản các chấm sao đè vào chữ */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 1), 0 0 8px rgba(0, 0, 0, 0.8); 
-}
-
-
-
+        
+        #wishText {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            line-height: 2.0;
+            text-align: center;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            max-width: 650px;
+            margin: 0 auto 25px;
+            min-height: 100px;
+            color: #f8f9fa;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.9), 1px -1px 0 rgba(0, 0, 0, 0.9), -1px 1px 0 rgba(0, 0, 0, 0.9), 1px 1px 0 rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 1), 0 4px 10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.6);
+        }
+        
         #wishText.typing::after {
             content: "▋";
             display: inline-block;
@@ -93,15 +103,20 @@
             margin-left: 3px;
             animation: cursorBlink 0.7s infinite;
         }
-
+        
         @keyframes cursorBlink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
+            0%, 49% {
+                opacity: 1;
+            }
+            50%,
+            100% {
+                opacity: 0;
+            }
         }
-
+        
         .facebook-link {
             position: fixed;
-            right: 15px;
+            left: 15px;
             bottom: 15px;
             z-index: 9999;
             display: inline-block;
@@ -117,12 +132,12 @@
             box-shadow: 0 3px 12px #f5a6d877;
             transition: transform .25s, box-shadow .25s;
         }
-
+        
         .facebook-link:hover {
             transform: scale(1.08);
             box-shadow: 0 5px 18px #f5a6d899;
         }
-
+        
         #confetti {
             position: fixed;
             inset: 0;
@@ -131,12 +146,21 @@
             pointer-events: none;
             z-index: 10;
         }
-
+        
+        .main-btn {
+            padding: 10px 24px;
+            border-radius: 20px;
+            background: #ffe082;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
         @media (max-width: 600px) {
             #greetingMessage h2 {
                 font-size: 2rem !important;
             }
-
             #wishText {
                 font-size: 0.95rem;
                 line-height: 1.9;
@@ -146,84 +170,46 @@
 </head>
 
 <body>
-
     <canvas id="skyCanvas"></canvas>
 
     <audio id="bgMusic" loop>
         <source src="tiktok_audio.mp3" type="audio/mpeg">
     </audio>
-
-    <button id="musicBtn" class="music-btn" type="button"
-            aria-label="Bật hoặc tắt nhạc">🎵</button>
+    <button id="musicBtn" class="music-btn" type="button" aria-label="Bật hoặc tắt nhạc" style="position: fixed; top: 15px; right: 15px; z-index: 9999;">🎵</button>
 
     <div id="petals"></div>
-
     <div class="progress">
         <div id="progressBar"></div>
     </div>
 
-   
     <section class="section hero" id="section1">
         <div class="hero-content">
-
             <div id="mainIntro">
-                <div class="small-text fade-in-text">
-                    20 • 10 • 2026
-                </div>
-
-                <h1 class="fade-delay-1">
-                    Chào mừng bạn đến với...<br>
-                    Trạm Không Gian 20/10 ✨
-                </h1>
-
-                <p class="sub-text fade-delay-2">
-                    Một chút giai điệu ngọt ngào hôm nay!
-                </p>
-
-                <button id="openBtn" class="main-btn" type="button">
-                    Nhận lời chúc nhé ❤
-                </button>
+                <div class="small-text fade-in-text"> 20 • 10 • 2026 </div>
+                <h1 class="fade-delay-1"> Chào mừng bạn đến với...<br> Trạm Không Gian 20/10 ✨ </h1>
+                <p class="sub-text fade-delay-2"> Một chút giai điệu ngọt ngào hôm nay! </p>
+                <button id="openBtn" class="main-btn" type="button"> Nhận lời chúc nhé ❤ </button>
             </div>
 
             <div id="greetingMessage">
-                <div class="small-text fade-in-text">
-                    🪐 GỬI TỪ TRẠM KHÔNG GIAN
-                </div>
-
-                <h2 class="fade-delay-1"
-                    style="font-family:'Dancing Script',cursive;
-                    font-size:2.8rem;color:#ffe082;
-                    margin:15px 0;">
-                    Happy Vietnamese Women's Day!
-                </h2>
-
-                <p id="wishText"></p>
-
-                <a class="facebook-link"
-   href="https://www.facebook.com/nguyen.duong.660508/"
-   target="_blank"
-   rel="noopener noreferrer"
-   style="position: fixed; left: 12px; right: auto; bottom: 16px; z-index: 999;">
-    🎀 CVN ♡
-</a
+                <div class="small-text fade-in-text"> 🪐 GỬI TỪ TRẠM KHÔNG GIAN </div>
+                <h2 class="fade-delay-1" style="font-family:'Dancing Script',cursive; font-size:2.8rem;color:#ffe082; margin:15px 0;"> Happy Vietnamese Women's Day! </h2>
+                <p id="wishText">Chúc bạn một ngày 20/10 thật vui vẻ, luôn tỏa sáng rực rỡ như những vì tinh tú trên bầu trời nhé! 🌷✨</p>
             </div>
-
-            <a class="facebook-link"
-   href="https://www.facebook.com/nguyen.duong.660508/"
-   target="_blank"
-   rel="noopener noreferrer"
-   style="position: fixed; left: 12px; right: auto; bottom: 16px; z-index: 999;">
-    🎀 CVN ♡
-</a
-
         </div>
     </section>
+
+    <a class="facebook-link" href="https://www.facebook.com/nguyen.duong.660508/" target="_blank" rel="noopener noreferrer"> 🎀 CVN ♡ </a>
 
     <canvas id="confetti"></canvas>
 
     <script src="app.js"></script>
+    <script>
+        document.getElementById('openBtn').addEventListener('click', function() {
+            document.getElementById('mainIntro').style.display = 'none';
+            document.getElementById('greetingMessage').style.display = 'block';
+        });
 
-a  <script>
         const canvasSky = document.getElementById("skyCanvas");
         const ctxSky = canvasSky.getContext("2d");
 
@@ -231,116 +217,97 @@ a  <script>
             canvasSky.width = window.innerWidth;
             canvasSky.height = window.innerHeight;
         }
-
         resizeSkyCanvas();
         window.addEventListener("resize", resizeSkyCanvas);
 
         const STAR_COUNT = 1000;
         const FOV = 250;
         const stars = [];
-
-        const starColors = [
-            "#ffffff", "#e3f2fd", "#bbdefb",
-            "#ffe082", "#f3e5f5"
-        ];
-
+        const starColors = ["#ffffff", "#e3f2fd", "#bbdefb", "#ffe082", "#f3e5f5"];
         for (let i = 0; i < STAR_COUNT; i++) {
             stars.push({
                 x: (Math.random() - 0.5) * 2000,
                 y: (Math.random() - 0.5) * 2000,
                 z: Math.random() * 2000,
                 size: Math.random() * 6 + 3,
-                color: starColors[
-                    Math.floor(Math.random() * starColors.length)
-                ]
+                color: starColors[Math.floor(Math.random() * starColors.length)]
             });
         }
 
-        let angleX = 0;
-        let angleY = 0;
-        let targetAngleX = 0;
-        let targetAngleY = 0;
-        let dragging = false;
-        let previous = { x: 0, y: 0 };
+        let angleX = 0,
+            angleY = 0,
+            targetAngleX = 0,
+            targetAngleY = 0;
+        let dragging = false,
+            previous = {
+                x: 0,
+                y: 0
+            };
 
         document.addEventListener("mousedown", e => {
             if (e.target.closest("button, a")) return;
             dragging = true;
-            previous = { x: e.clientX, y: e.clientY };
+            previous = {
+                x: e.clientX,
+                y: e.clientY
+            };
         });
 
         document.addEventListener("mousemove", e => {
             if (!dragging) return;
-
             targetAngleY += (e.clientX - previous.x) * 0.002;
             targetAngleX += (e.clientY - previous.y) * 0.002;
-
-            targetAngleX = Math.max(
-                -Math.PI / 2.5,
-                Math.min(Math.PI / 2.5, targetAngleX)
-            );
-
-            previous = { x: e.clientX, y: e.clientY };
+            targetAngleX = Math.max(-Math.PI / 2.5, Math.min(Math.PI / 2.5, targetAngleX));
+            previous = {
+                x: e.clientX,
+                y: e.clientY
+            };
         });
 
         window.addEventListener("mouseup", () => dragging = false);
 
         function renderSky() {
-            ctxSky.fillStyle = "#02020a";
+            ctxSky.fillStyle = "#1a1a24";
             ctxSky.fillRect(0, 0, canvasSky.width, canvasSky.height);
 
             angleX += (targetAngleX - angleX) * 0.08;
             angleY += (targetAngleY - angleY) * 0.08;
-
-            const cosX = Math.cos(angleX);
-            const sinX = Math.sin(angleX);
-            const cosY = Math.cos(angleY);
-            const sinY = Math.sin(angleY);
-
+            const cosX = Math.cos(angleX),
+                sinX = Math.sin(angleX);
+            const cosY = Math.cos(angleY),
+                sinY = Math.sin(angleY);
             const centerX = canvasSky.width / 2;
             const centerY = canvasSky.height / 2;
 
             for (const star of stars) {
                 star.z -= 1;
-
                 if (star.z <= 0) {
                     star.z = 2000;
                     star.x = (Math.random() - 0.5) * 2000;
                     star.y = (Math.random() - 0.5) * 2000;
                 }
-
                 const x1 = star.x * cosY - star.z * sinY;
                 const z1 = star.x * sinY + star.z * cosY;
                 const y2 = star.y * cosX - z1 * sinX;
                 const z2 = star.y * sinX + z1 * cosX;
-
                 if (z2 <= 5) continue;
-
                 const scale = FOV / z2;
                 const screenX = centerX + x1 * scale;
                 const screenY = centerY + y2 * scale;
-
-                if (
-                    screenX < 0 || screenX > canvasSky.width ||
-                    screenY < 0 || screenY > canvasSky.height
-                ) continue;
-
+                if (screenX < 0 || screenX > canvasSky.width || screenY < 0 || screenY > canvasSky.height) continue;
                 const radius = Math.max(0.2, star.size * scale * 0.5);
                 const opacity = Math.max(0, Math.min(1, (2000 - z2) / 400));
-
                 ctxSky.globalAlpha = opacity;
                 ctxSky.beginPath();
                 ctxSky.arc(screenX, screenY, radius, 0, Math.PI * 2);
                 ctxSky.fillStyle = star.color;
                 ctxSky.fill();
             }
-
             ctxSky.globalAlpha = 1;
             requestAnimationFrame(renderSky);
         }
-
         renderSky();
     </script>
-
 </body>
+
 </html>
