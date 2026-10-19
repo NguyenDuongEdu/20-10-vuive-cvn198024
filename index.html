@@ -143,10 +143,8 @@
 
 <body>
 
-    <!-- Nền vũ trụ -->
     <canvas id="skyCanvas"></canvas>
 
-    <!-- Nhạc nền -->
     <audio id="bgMusic" loop>
         <source src="tiktok_audio.mp3" type="audio/mpeg">
     </audio>
@@ -154,15 +152,13 @@
     <button id="musicBtn" class="music-btn" type="button"
             aria-label="Bật hoặc tắt nhạc">🎵</button>
 
-    <!-- Cánh hoa -->
     <div id="petals"></div>
 
-    <!-- Thanh tiến trình -->
     <div class="progress">
         <div id="progressBar"></div>
     </div>
 
-    <!-- Màn hình chính -->
+   
     <section class="section hero" id="section1">
         <div class="hero-content">
 
@@ -185,7 +181,6 @@
                 </button>
             </div>
 
-            <!-- Nội dung lời chúc -->
             <div id="greetingMessage">
                 <div class="small-text fade-in-text">
                     🪐 GỬI TỪ TRẠM KHÔNG GIAN
@@ -198,7 +193,6 @@
                     Happy Vietnamese Women's Day!
                 </h2>
 
-                <!-- JS sẽ tự viết lời chúc vào đây -->
                 <p id="wishText"></p>
 
                 <a class="facebook-link"
@@ -210,7 +204,6 @@
 </a
             </div>
 
-            <!-- Link Facebook ở màn hình mở đầu -->
             <a class="facebook-link"
    href="https://www.facebook.com/nguyen.duong.660508/"
    target="_blank"
@@ -222,14 +215,11 @@
         </div>
     </section>
 
-    <!-- Pháo giấy -->
     <canvas id="confetti"></canvas>
 
-    <!-- Chỉ nạp app.js một lần -->
     <script src="app.js"></script>
 
-    <!-- Nền sao vũ trụ -->
-    <script>
+  <script>
         const canvasSky = document.getElementById("skyCanvas");
         const ctxSky = canvasSky.getContext("2d");
 
