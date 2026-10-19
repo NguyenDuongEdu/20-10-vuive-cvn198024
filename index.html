@@ -65,22 +65,26 @@
             padding: 20px;
         }
 
-        #wishText {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            color: #e3f2fd;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 300;
-            line-height: 1.9;
-            text-align: center;
-            white-space: pre-wrap;
-            overflow-wrap: anywhere;
-            max-width: 650px;
-            margin: 0 auto 25px;
-            min-height: 100px;
-        }
+      #wishText {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff; /* Chuyển hẳn sang màu trắng tinh để tăng độ tương phản */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 400; /* Tăng độ dày chữ lên 400 để nét chữ rõ ràng, không bị vỡ hạt */
+    line-height: 1.9;
+    text-align: center;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    max-width: 650px;
+    margin: 0 auto 25px;
+    min-height: 100px;
+    /* KHẮC PHỤC CHÍNH: Đổ bóng đen đậm giúp chữ nổi bần bật, cản các chấm sao đè vào chữ */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 1), 0 0 8px rgba(0, 0, 0, 0.8); 
+}
+
+
 
         #wishText.typing::after {
             content: "▋";
@@ -183,7 +187,7 @@
 
             <div id="greetingMessage">
                 <div class="small-text fade-in-text">
-                    🪐 GỬI TỪ TRẠM KHÔNG GIAN CVN
+                    🪐 GỬI TỪ TRẠM KHÔNG GIAN
                 </div>
 
                 <h2 class="fade-delay-1"
@@ -219,7 +223,7 @@
 
     <script src="app.js"></script>
 
-  <script>
+a  <script>
         const canvasSky = document.getElementById("skyCanvas");
         const ctxSky = canvasSky.getContext("2d");
 
